@@ -120,6 +120,9 @@ const content = {
       formErrorSend: "Mesaj gönderilemedi. Lütfen daha sonra tekrar deneyin.",
       formErrorConfig:
         "E-posta servisi yapılandırılmamış. Bize doğrudan yazabilirsiniz: munzurcevredernegi@gmail.com",
+      formKvkkNoticePrefix: "Form üzerinden gönderdiğiniz veriler ",
+      formKvkkNoticeLink: "KVKK Aydınlatma Metni",
+      formKvkkNoticeSuffix: " uyarınca işlenir.",
       pageTitle: "İletişim",
       pageDesc:
         "Munzur Çevre Derneği ile iletişime geçin — İstanbul ve Dersim ofisleri.",
@@ -422,6 +425,10 @@ const content = {
       formErrorSend: "Could not send your message. Please try again later.",
       formErrorConfig:
         "Email service is not configured. You can write to us directly: munzurcevredernegi@gmail.com",
+      formKvkkNoticePrefix:
+        "Data you submit through this form is processed in accordance with our ",
+      formKvkkNoticeLink: "Data protection notice (KVKK)",
+      formKvkkNoticeSuffix: ".",
       pageTitle: "Contact",
       pageDesc:
         "Contact Munzur Environment Association — Istanbul and Dersim offices.",

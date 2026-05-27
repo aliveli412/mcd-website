@@ -40,11 +40,20 @@ export const metadata: Metadata = {
     siteName: "Munzur Çevre Derneği",
     locale: "tr_TR",
     type: "website",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Munzur Çevre Derneği",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Munzur Çevre Derneği",
     description: "2003'ten beri Türkiye genelinde ekolojik mücadele",
+    images: ["/opengraph-image"],
   },
 };
 

@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { submitContactForm } from "@/app/(site)/iletisim/actions";
 import { ArrowRight } from "@/components/icons/ArrowRight";
+import { LocalizedLink } from "@/components/site/LocalizedLink";
 import type { SiteContent } from "@/lib/i18n/site-content";
 
 type ContactLabels = SiteContent["contact"];
@@ -74,6 +75,17 @@ export function ContactForm({ labels }: { labels: ContactLabels }) {
               {labels.formSuccess}
             </p>
           ) : null}
+
+          <p className="mb-4 text-xs leading-relaxed text-cream/50">
+            {labels.formKvkkNoticePrefix}
+            <LocalizedLink
+              href="/kvkk"
+              className="font-medium text-cream/75 underline decoration-cream/30 underline-offset-2 hover:text-leaf-green"
+            >
+              {labels.formKvkkNoticeLink}
+            </LocalizedLink>
+            {labels.formKvkkNoticeSuffix}
+          </p>
 
           <button
             type="submit"
