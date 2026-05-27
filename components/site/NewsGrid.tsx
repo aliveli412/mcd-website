@@ -1,5 +1,4 @@
-import { NewsCarousel } from "@/components/site/NewsCarousel";
-import { NewsShowcase } from "@/components/site/NewsShowcase";
+import { NewsHomeDisplay } from "@/components/site/NewsHomeDisplay";
 import { SectionHeader, SiteSection } from "@/components/site/SectionParts";
 import type { PublicNews } from "@/lib/data/types";
 import { getLocale } from "@/lib/i18n/locale";
@@ -34,8 +33,7 @@ export async function NewsGrid({ news }: { news: PublicNews[] }) {
         link={{ href: newsIndexHref, label: t.newsAllLink }}
       />
 
-      <NewsCarousel news={news} />
-      <NewsShowcase news={news} />
+      <NewsHomeDisplay news={news} />
     </SiteSection>
   );
 }

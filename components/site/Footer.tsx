@@ -4,6 +4,7 @@ import { LogoMark } from "@/components/layout/LogoMark";
 import { SiteContainer } from "@/components/layout/SiteContainer";
 import { organization } from "@/lib/organization";
 import { getFooterNav, localizeFooterLinks } from "@/lib/i18n/navigation";
+import { localizedPath } from "@/lib/i18n/locale-url";
 import { getLocale } from "@/lib/i18n/locale";
 import { getMessages } from "@/lib/i18n/messages";
 import { getSiteContent } from "@/lib/i18n/site-content";
@@ -108,13 +109,22 @@ export async function Footer() {
             aria-label="Yasal"
             className="flex flex-wrap gap-x-4 gap-y-2 text-sm font-medium text-cream/60"
           >
-            <Link href="#" className="transition-colors hover:text-leaf-green">
+            <Link
+              href={localizedPath("/gizlilik", locale)}
+              className="transition-colors hover:text-leaf-green"
+            >
               {site.legal.privacy}
             </Link>
-            <Link href="#" className="transition-colors hover:text-leaf-green">
+            <Link
+              href={localizedPath("/kvkk", locale)}
+              className="transition-colors hover:text-leaf-green"
+            >
               {site.legal.kvkk}
             </Link>
-            <Link href="#" className="transition-colors hover:text-leaf-green">
+            <Link
+              href={localizedPath("/cerez", locale)}
+              className="transition-colors hover:text-leaf-green"
+            >
               {site.legal.cookies}
             </Link>
           </nav>

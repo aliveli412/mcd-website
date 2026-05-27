@@ -41,6 +41,11 @@ export const metadata: Metadata = {
     locale: "tr_TR",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Munzur Çevre Derneği",
+    description: "2003'ten beri Türkiye genelinde ekolojik mücadele",
+  },
 };
 
 export default async function RootLayout({
