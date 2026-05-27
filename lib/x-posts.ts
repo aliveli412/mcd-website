@@ -20,9 +20,11 @@ export function parseTweetIdFromUrl(input: string): string | null {
 }
 
 export function normalizeDbXPost(row: Record<string, unknown>): DbXPost {
-  let status: XPostStatus = "draft";
-  if (row.status === "published" || row.status === "draft") {
-    status = row.status;
+  let status: XPostStatus = "published";
+  if (row.status === "draft") {
+    status = "draft";
+  } else if (row.status === "published") {
+    status = "published";
   }
 
   return {

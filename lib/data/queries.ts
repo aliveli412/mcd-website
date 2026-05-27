@@ -166,11 +166,13 @@ export async function getPublishedNewsSlugs(): Promise<string[]> {
 
 export async function getHomepageData() {
   const { getFieldGalleryPhotos } = await import("@/lib/data/field-gallery");
+  const { getPublishedXPosts } = await import("@/lib/data/x-posts");
 
-  const [spotlight, news, fieldGallery] = await Promise.all([
+  const [spotlight, news, fieldGallery, xPosts] = await Promise.all([
     getDisplayEvents(2),
     getLatestNews(6),
     getFieldGalleryPhotos(),
+    getPublishedXPosts(),
   ]);
 
   const today = todayIsoDate();
@@ -183,5 +185,6 @@ export async function getHomepageData() {
     spotlightUsesPast,
     news,
     fieldGallery,
+    xPosts,
   };
 }
