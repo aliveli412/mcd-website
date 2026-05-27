@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { ArrowRight } from "@/components/icons/ArrowRight";
 import { LocaleSwitcher } from "@/components/site/LocaleSwitcher";
 import { useLocale } from "@/components/site/LocaleProvider";
@@ -93,7 +93,9 @@ export function MobileNav({
             {t.supportCta}
             <ArrowRight />
           </Link>
-          <LocaleSwitcher variant="mobile" className="mx-auto w-full justify-center" />
+          <Suspense fallback={null}>
+            <LocaleSwitcher variant="mobile" className="mx-auto w-full justify-center" />
+          </Suspense>
           <a
             href={`mailto:${organization.email}`}
             className="block text-center text-sm text-muted hover:text-leaf-green"

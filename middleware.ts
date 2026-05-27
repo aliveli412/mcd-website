@@ -3,6 +3,11 @@ import { NextResponse, type NextRequest } from "next/server";
 import { isAllowedAdmin } from "@/lib/admin/check-admin";
 import { isAdminAuthBypassed } from "@/lib/admin/dev-bypass";
 import { getSupabaseAnonKey, getSupabaseUrl } from "@/lib/env";
+import {
+  LOCALE_COOKIE,
+  LOCALE_QUERY,
+  parseLocale,
+} from "@/lib/i18n/locale-constants";
 
 function copyCookies(from: NextResponse, to: NextResponse) {
   from.cookies.getAll().forEach((cookie) => {
@@ -10,8 +15,41 @@ function copyCookies(from: NextResponse, to: NextResponse) {
   });
 }
 
+const LOCALE_HEADER = "x-mcd-locale";
+
+function localeFromRequest(request: NextRequest): "tr" | "en" | null {
+  const fromQuery = request.nextUrl.searchParams.get(LOCALE_QUERY);
+  if (fromQuery === "en" || fromQuery === "tr") return fromQuery;
+  return null;
+}
+
+function applyLocale(
+  response: NextResponse,
+  request: NextRequest,
+  locale: "tr" | "en",
+) {
+  response.cookies.set(LOCALE_COOKIE, locale, {
+    path: "/",
+    maxAge: 60 * 60 * 24 * 365,
+    sameSite: "lax",
+    secure: request.nextUrl.protocol === "https:",
+  });
+}
+
 export async function middleware(request: NextRequest) {
-  let supabaseResponse = NextResponse.next({ request });
+  const localeFromUrl = localeFromRequest(request);
+  const requestHeaders = new Headers(request.headers);
+  if (localeFromUrl) {
+    requestHeaders.set(LOCALE_HEADER, localeFromUrl);
+  }
+
+  let supabaseResponse = NextResponse.next({
+    request: { headers: requestHeaders },
+  });
+
+  if (localeFromUrl) {
+    applyLocale(supabaseResponse, request, localeFromUrl);
+  }
 
   const supabase = createServerClient(
     getSupabaseUrl(),
@@ -49,6 +87,7 @@ export async function middleware(request: NextRequest) {
       loginUrl.searchParams.set("next", request.nextUrl.pathname);
       const redirectResponse = NextResponse.redirect(loginUrl);
       copyCookies(supabaseResponse, redirectResponse);
+      if (localeFromUrl) applyLocale(redirectResponse, request, localeFromUrl);
       return redirectResponse;
     }
 
@@ -57,6 +96,7 @@ export async function middleware(request: NextRequest) {
       loginUrl.searchParams.set("error", "unauthorized");
       const redirectResponse = NextResponse.redirect(loginUrl);
       copyCookies(supabaseResponse, redirectResponse);
+      if (localeFromUrl) applyLocale(redirectResponse, request, localeFromUrl);
       return redirectResponse;
     }
   }

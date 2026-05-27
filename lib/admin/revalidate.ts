@@ -24,3 +24,9 @@ export function revalidateNews(slug?: string) {
     revalidatePath(`/haberler/${slug}`);
   }
 }
+
+export function revalidateXPosts() {
+  revalidatePath("/");
+  revalidatePath("/admin");
+  revalidatePath("/admin/x");
+}

@@ -91,11 +91,12 @@ const content = {
       title: "Güncel paylaşımlar",
       accent: "paylaşımlar",
       blurb:
-        "@munzurcevre2 hesabında yayınladığımız duyuru, eylem ve basın paylaşımları burada otomatik listelenir.",
+        "@munzurcevre2 hesabındaki seçili paylaşımlar burada gösterilir. Yeni gönderi için admin panelinden bağlantı ekleyin.",
       follow: "X'te takip et",
       viewOnX: "Tüm gönderiler",
       timelineFallback: "@munzurcevre2 gönderileri",
-      note: "Akış üçüncü taraf (X) widget'ı ile yüklenir; reklam engelleyici kullanıyorsanız görünmeyebilir.",
+      emptyPosts:
+        "Henüz gösterilecek gönderi yok. Admin → X paylaşımları bölümünden ekleyin.",
     },
     joinCta: {
       eyebrow: "Destek & gönüllülük",
@@ -358,11 +359,12 @@ const content = {
       title: "Latest posts",
       accent: "posts",
       blurb:
-        "Announcements, actions and press updates from @munzurcevre2 are listed here automatically.",
+        "Selected posts from @munzurcevre2 appear here. Add a post link in the admin panel to show more.",
       follow: "Follow on X",
       viewOnX: "All posts",
       timelineFallback: "Posts by @munzurcevre2",
-      note: "The feed is loaded via X's widget; ad blockers may hide it.",
+      emptyPosts:
+        "No posts to show yet. Add links under Admin → X posts.",
     },
     joinCta: {
       eyebrow: "Support & volunteering",

@@ -1,9 +1,11 @@
 "use client";
 
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useTransition } from "react";
 import { setLocale } from "@/app/actions/set-locale";
 import { useLocale } from "@/components/site/LocaleProvider";
 import type { Locale } from "@/lib/i18n/locale";
+import { pathWithLocale } from "@/lib/i18n/locale-url";
 
 const styles = {
   header: {
@@ -30,14 +32,22 @@ export function LocaleSwitcher({
   className?: string;
   variant?: keyof typeof styles;
 }) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const { locale, t } = useLocale();
   const [pending, startTransition] = useTransition();
   const s = styles[variant];
 
   function switchTo(next: Locale) {
     if (next === locale || pending) return;
-    startTransition(() => {
-      void setLocale(next);
+
+    const href = pathWithLocale(pathname, next, searchParams);
+
+    startTransition(async () => {
+      await setLocale(next);
+      router.replace(href);
+      router.refresh();
     });
   }
 

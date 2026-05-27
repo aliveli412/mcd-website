@@ -16,5 +16,3 @@ export function isFieldGalleryTableMissing(error: {
   );
 }
 
-export const FIELD_GALLERY_SETUP_HINT =
-  "docs/supabase/field-gallery.sql dosyasını Supabase SQL Editor'da çalıştırın.";

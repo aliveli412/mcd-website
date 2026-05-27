@@ -1,16 +1,24 @@
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
+import {
+  LOCALE_COOKIE,
+  type Locale,
+  parseLocale,
+} from "@/lib/i18n/locale-constants";
 
-export const LOCALE_COOKIE = "mcd_locale";
+const LOCALE_HEADER = "x-mcd-locale";
 
-export type Locale = "tr" | "en";
-
-export const defaultLocale: Locale = "tr";
-
-export function parseLocale(value: string | undefined | null): Locale {
-  return value === "en" ? "en" : "tr";
-}
+export type { Locale } from "@/lib/i18n/locale-constants";
+export {
+  LOCALE_COOKIE,
+  LOCALE_QUERY,
+  defaultLocale,
+  parseLocale,
+} from "@/lib/i18n/locale-constants";
 
 export async function getLocale(): Promise<Locale> {
+  const fromHeader = (await headers()).get(LOCALE_HEADER);
+  if (fromHeader) return parseLocale(fromHeader);
+
   const store = await cookies();
   return parseLocale(store.get(LOCALE_COOKIE)?.value);
 }

@@ -41,9 +41,7 @@ export function FieldGalleryList({ photos }: { photos: DbFieldGalleryPhoto[] }) 
   if (photos.length === 0) {
     return (
       <p className="mt-6 text-sm text-cream/50">
-        Henüz veritabanında görsel yok — soldan ekleyin veya{" "}
-        <code className="text-cream/70">field-gallery.sql</code> çalıştırın.
-        Tablo boşsa sitede varsayılan /photos görselleri görünür.
+        Henüz görsel yok — soldan ekleyebilirsiniz.
       </p>
     );
   }

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { ArrowRight } from "@/components/icons/ArrowRight";
 import { LogoMark } from "@/components/layout/LogoMark";
 import { MainNav } from "@/components/layout/MainNav";
@@ -43,7 +43,16 @@ export function Header() {
             <span className="text-cream/40" aria-hidden>
               ·
             </span>
-            <LocaleSwitcher />
+            <Suspense
+              fallback={
+                <span
+                  className="inline-block h-9 w-[5.5rem] rounded-full bg-cream/10"
+                  aria-hidden
+                />
+              }
+            >
+              <LocaleSwitcher />
+            </Suspense>
           </div>
         </SiteContainer>
       </div>
