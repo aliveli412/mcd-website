@@ -40,11 +40,13 @@ function formatEventDate(
 ): string {
   if (!useLocalizedCopy && dateDisplay?.trim()) return dateDisplay.trim();
   if (!eventDate) return dateDisplay?.trim() ?? "";
-  return new Intl.DateTimeFormat(locale === "en" ? "en-GB" : "tr-TR", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  }).format(new Date(eventDate));
+  const options: Intl.DateTimeFormatOptions = useLocalizedCopy
+    ? { day: "numeric", month: "long", year: "numeric", weekday: "long" }
+    : { day: "numeric", month: "long", year: "numeric" };
+  return new Intl.DateTimeFormat(
+    locale === "en" ? "en-GB" : "tr-TR",
+    options,
+  ).format(new Date(eventDate));
 }
 
 function derivePosterPlaceholder(

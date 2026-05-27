@@ -24,7 +24,8 @@ Bu site **Next.js 16 (SSR)** kullanır; sadece statik HTML hosting yetmez. Hosti
 | 5 | `docs/supabase/news-english.sql` |
 | 6 | `docs/supabase/events-english.sql` |
 | 7 | `docs/supabase/admin-users.sql` |
-| 8 | (isteğe bağlı) `news-seed-2025-2026.sql`, `news-english-content.sql` |
+| 8 | (isteğe bağlı) `events-seed-2025-2026.sql`, `events-english-content.sql` |
+| 9 | (isteğe bağlı) `news-seed-2025-2026.sql`, `news-english-content.sql` |
 
 `events-migrate.sql` yalnızca eski/events tablosu varsa.
 
