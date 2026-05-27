@@ -11,6 +11,8 @@ import { getLocale } from "@/lib/i18n/locale";
 import { getSiteContent } from "@/lib/i18n/site-content";
 import { sitePhotos } from "@/lib/site-photos";
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata(): Promise<Metadata> {
   const ev = getSiteContent(await getLocale()).events;
   return {

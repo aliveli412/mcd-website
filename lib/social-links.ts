@@ -5,5 +5,3 @@ export const socialLinks = {
   instagram: "https://www.instagram.com/munzurcevre/",
   x: `https://x.com/${TWITTER_HANDLE}`,
 } as const;
-
-export const twitterTimelineUrl = `https://twitter.com/${TWITTER_HANDLE}`;

@@ -23,6 +23,7 @@ export async function generateStaticParams() {
   return slugs.map((slug) => ({ slug }));
 }
 
+export const dynamic = "force-dynamic";
 export const dynamicParams = true;
 
 export async function generateMetadata({

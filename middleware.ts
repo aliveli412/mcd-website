@@ -17,10 +17,14 @@ function copyCookies(from: NextResponse, to: NextResponse) {
 
 const LOCALE_HEADER = "x-mcd-locale";
 
-function localeFromRequest(request: NextRequest): "tr" | "en" | null {
+function localeFromQuery(request: NextRequest): "tr" | "en" | null {
   const fromQuery = request.nextUrl.searchParams.get(LOCALE_QUERY);
   if (fromQuery === "en" || fromQuery === "tr") return fromQuery;
   return null;
+}
+
+function resolveLocale(request: NextRequest): "tr" | "en" {
+  return localeFromQuery(request) ?? parseLocale(request.cookies.get(LOCALE_COOKIE)?.value);
 }
 
 function applyLocale(
@@ -37,11 +41,10 @@ function applyLocale(
 }
 
 export async function middleware(request: NextRequest) {
-  const localeFromUrl = localeFromRequest(request);
+  const localeFromUrl = localeFromQuery(request);
+  const locale = resolveLocale(request);
   const requestHeaders = new Headers(request.headers);
-  if (localeFromUrl) {
-    requestHeaders.set(LOCALE_HEADER, localeFromUrl);
-  }
+  requestHeaders.set(LOCALE_HEADER, locale);
 
   let supabaseResponse = NextResponse.next({
     request: { headers: requestHeaders },

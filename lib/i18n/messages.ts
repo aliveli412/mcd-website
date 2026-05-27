@@ -23,8 +23,8 @@ const messages = {
     source: "Kaynak:",
     originalSource: "Orijinal haber",
     newsNotFound: "Haber bulunamadı",
-    showcaseDrag: "Fareyle sürükleyin, tekerlek ile kaydırın veya okları kullanın",
-    newsCarouselDrag: "Ok ile geçin veya parmağınızla / fareyle sürükleyin",
+    showcaseDrag: "Tıklayıp sürükleyin veya okları kullanın",
+    newsCarouselDrag: "Tıklayıp sürükleyin veya okları kullanın",
     nav: {
       home: "ANASAYFA",
       about: "HAKKIMIZDA",
@@ -63,8 +63,8 @@ const messages = {
     source: "Source:",
     originalSource: "Original article",
     newsNotFound: "Article not found",
-    showcaseDrag: "Drag with mouse, scroll with wheel, or use arrows",
-    newsCarouselDrag: "Use arrows or swipe / drag with finger or mouse",
+    showcaseDrag: "Click and drag, or use the arrows",
+    newsCarouselDrag: "Click and drag, or use the arrows",
     nav: {
       home: "HOME",
       about: "ABOUT",

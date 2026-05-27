@@ -86,18 +86,6 @@ const content = {
       aside: "Eylem, buluşma ve saha çalışmalarından kareler",
       featured: "Öne çıkan",
     },
-    twitter: {
-      eyebrow: "X (TWITTER)",
-      title: "Güncel paylaşımlar",
-      accent: "paylaşımlar",
-      blurb:
-        "@munzurcevre2 hesabındaki seçili paylaşımlar burada gösterilir. Yeni gönderi için admin panelinden bağlantı ekleyin.",
-      follow: "X'te takip et",
-      viewOnX: "Tüm gönderiler",
-      timelineFallback: "@munzurcevre2 gönderileri",
-      emptyPosts:
-        "Henüz gösterilecek gönderi yok. Admin → X paylaşımları bölümünden ekleyin.",
-    },
     joinCta: {
       eyebrow: "Destek & gönüllülük",
       title: "Mücadeleye katılın",
@@ -353,18 +341,6 @@ const content = {
         "Side by side with communities from marketplaces to mountain villages across Turkey.",
       aside: "Moments from actions, gatherings and field work",
       featured: "Featured",
-    },
-    twitter: {
-      eyebrow: "X (TWITTER)",
-      title: "Latest posts",
-      accent: "posts",
-      blurb:
-        "Selected posts from @munzurcevre2 appear here. Add a post link in the admin panel to show more.",
-      follow: "Follow on X",
-      viewOnX: "All posts",
-      timelineFallback: "Posts by @munzurcevre2",
-      emptyPosts:
-        "No posts to show yet. Add links under Admin → X posts.",
     },
     joinCta: {
       eyebrow: "Support & volunteering",

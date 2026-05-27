@@ -36,9 +36,10 @@ function formatEventDate(
   eventDate: string | null,
   dateDisplay: string | null,
   locale: Locale,
+  useLocalizedCopy = false,
 ): string {
-  if (dateDisplay?.trim()) return dateDisplay.trim();
-  if (!eventDate) return "";
+  if (!useLocalizedCopy && dateDisplay?.trim()) return dateDisplay.trim();
+  if (!eventDate) return dateDisplay?.trim() ?? "";
   return new Intl.DateTimeFormat(locale === "en" ? "en-GB" : "tr-TR", {
     day: "numeric",
     month: "long",
@@ -70,7 +71,14 @@ export function mapEvent(
     : normalizeDbEvent(row as Record<string, unknown>);
 
   const titleEn = e.title_en?.trim();
-  const useEn = locale === "en" && Boolean(titleEn);
+  const hasEnglish =
+    Boolean(titleEn) ||
+    Boolean(e.description_en?.trim()) ||
+    Boolean(e.category_en?.trim()) ||
+    Boolean(e.location_en?.trim()) ||
+    Boolean(e.duration_en?.trim()) ||
+    (Array.isArray(e.body_en) && e.body_en.length > 0);
+  const useEn = locale === "en" && hasEnglish;
   const titlePlain = useEn && e.title_plain_en?.trim()
     ? e.title_plain_en.trim()
     : e.title_plain;
@@ -92,7 +100,7 @@ export function mapEvent(
     slug: e.slug,
     category:
       useEn && e.category_en?.trim() ? e.category_en.trim() : e.category,
-    date: formatEventDate(e.event_date, e.date_display, locale),
+    date: formatEventDate(e.event_date, e.date_display, locale, useEn),
     title: title.includes("\n") ? title : titlePlain,
     titlePlain,
     description:

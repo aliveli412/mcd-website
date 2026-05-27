@@ -8,7 +8,6 @@ const LINKS: { href: string; label: string; exact?: boolean }[] = [
   { href: "/admin/etkinlikler", label: "Etkinlikler" },
   { href: "/admin/haberler", label: "Haberler" },
   { href: "/admin/saha", label: "Mücadele sokakta" },
-  { href: "/admin/x", label: "X paylaşımları" },
 ];
 
 export function AdminNav() {

@@ -1,3 +1,4 @@
+import { asStringArray } from "@/lib/data/json-body";
 import type { DbEvent, EventStatus } from "@/lib/events-db";
 
 /** Supabase satırını tek şemaya çevirir (date/event_date, published/status). */
@@ -20,7 +21,7 @@ export function normalizeDbEvent(row: Record<string, unknown>): DbEvent {
     title,
     title_plain: titlePlain,
     description: String(row.description ?? ""),
-    body: Array.isArray(row.body) ? (row.body as string[]) : [],
+    body: asStringArray(row.body),
     category: String(row.category ?? ""),
     date_display: (row.date_display as string | null) ?? null,
     event_date: eventDate,
@@ -39,7 +40,7 @@ export function normalizeDbEvent(row: Record<string, unknown>): DbEvent {
     category_en: (row.category_en as string | null) ?? null,
     location_en: (row.location_en as string | null) ?? null,
     duration_en: (row.duration_en as string | null) ?? null,
-    body_en: Array.isArray(row.body_en) ? (row.body_en as string[]) : [],
+    body_en: asStringArray(row.body_en),
     created_at: String(row.created_at ?? ""),
     updated_at: String(row.updated_at ?? ""),
   };

@@ -8,7 +8,6 @@ import type { PublicNews } from "@/lib/data/types";
 
 const VISIBLE = 3;
 const AUTO_MS = 5200;
-const WHEEL_THRESHOLD = 32;
 const SWIPE_RATIO = 0.18;
 const SWIPE_THRESHOLD_PX = 40;
 
@@ -57,35 +56,12 @@ export function NewsShowcase({ news }: { news: PublicNews[] }) {
     useSwipeCarousel(isCarousel ? slideCount : 1);
   const [paused, setPaused] = useState(false);
   const viewportRef = useRef<HTMLDivElement>(null);
-  const wheelLock = useRef(false);
 
   useEffect(() => {
     if (!isCarousel || paused || slideCount <= 1) return;
     const id = setInterval(() => goBy(1), AUTO_MS);
     return () => clearInterval(id);
   }, [isCarousel, paused, slideCount, goBy]);
-
-  useEffect(() => {
-    const el = viewportRef.current;
-    if (!el || !isCarousel) return;
-
-    const onWheel = (e: WheelEvent) => {
-      const delta =
-        Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-      if (Math.abs(delta) < WHEEL_THRESHOLD) return;
-
-      e.preventDefault();
-      if (wheelLock.current) return;
-      wheelLock.current = true;
-      goBy(delta > 0 ? 1 : -1);
-      window.setTimeout(() => {
-        wheelLock.current = false;
-      }, 420);
-    };
-
-    el.addEventListener("wheel", onWheel, { passive: false });
-    return () => el.removeEventListener("wheel", onWheel);
-  }, [isCarousel, goBy]);
 
   if (news.length === 0) return null;
 

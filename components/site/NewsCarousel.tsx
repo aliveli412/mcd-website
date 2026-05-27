@@ -48,7 +48,8 @@ export function NewsCarousel({
   className?: string;
 }) {
   const { site, t } = useLocale();
-  const { index, go, goBy, dragHandlers } = useSwipeCarousel(news.length);
+  const { index, go, goBy, dragOffset, isDragging, dragHandlers } =
+    useSwipeCarousel(news.length);
 
   if (news.length === 0) return null;
 
@@ -77,15 +78,24 @@ export function NewsCarousel({
       </div>
 
       <div
-        className="cursor-grab touch-pan-y select-none active:cursor-grabbing"
+        className={`cursor-grab overflow-hidden select-none ${
+          isDragging ? "cursor-grabbing" : ""
+        }`}
         aria-roledescription="carousel"
         aria-label="Haberler"
+        style={{ touchAction: "none" }}
         {...dragHandlers}
       >
-        <div className="overflow-hidden rounded-2xl">
+        <div className="rounded-2xl">
           <div
-            className="flex transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)]"
-            style={{ transform: `translateX(-${index * 100}%)` }}
+            className={`flex ${
+              isDragging
+                ? ""
+                : "transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)]"
+            }`}
+            style={{
+              transform: `translateX(calc(-${index * 100}% + ${dragOffset}px))`,
+            }}
           >
             {news.map((item) => (
               <div key={item.slug} className="w-full shrink-0 px-0.5">
