@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCD Admin · /admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest-dark:#3D4A2D;
+    --forest-deep:#2A3520;
+    --leaf-green:#2D8B5F;
+    --river-blue:#2A6BAD;
+    --cream:#F5F1E8;
+    --cream-deep:#EAE3D2;
+    --bone:#FAF6ED;
+    --terracotta:#C46A4E;
+    --ink:#1A1F12;
+    --muted:#6B6859;
+    --border:rgba(0,0,0,0.08);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:'DM Sans',sans-serif;
+    background:#F3EFE5;
+    color:var(--ink);
+    line-height:1.5;
+    min-height:100vh;
+  }
+  .display{font-family:'Anton',sans-serif;letter-spacing:0.02em;text-transform:uppercase}
+
+  .mockup-banner{
+    background:var(--terracotta);color:white;padding:10px 20px;
+    text-align:center;font-size:13px;font-weight:600;letter-spacing:0.04em;
+  }
+
+  /* ===================== LAYOUT ===================== */
+  .admin-layout{
+    display:grid;
+    grid-template-columns:260px 1fr;
+    min-height:calc(100vh - 38px);
+  }
+
+  /* ===================== SIDEBAR ===================== */
+  .sidebar{
+    background:var(--forest-deep);
+    color:var(--cream);
+    padding:24px 0;
+    display:flex;flex-direction:column;
+    border-right:1px solid rgba(0,0,0,0.1);
+  }
+  .sidebar-brand{
+    padding:0 24px 24px;
+    border-bottom:1px solid rgba(245,241,232,0.1);
+    display:flex;align-items:center;gap:12px;
+  }
+  .sidebar-brand img{width:40px;height:40px;border-radius:8px}
+  .sidebar-brand .text{font-family:'Anton',sans-serif;font-size:15px;line-height:1.1;letter-spacing:0.04em}
+  .sidebar-brand .text span{display:block;font-family:'DM Sans',sans-serif;font-size:10px;font-weight:500;color:rgba(245,241,232,0.55);letter-spacing:0.15em;margin-top:2px}
+
+  .sidebar-section{padding:20px 16px 8px}
+  .sidebar-section-title{
+    font-size:10px;font-weight:700;letter-spacing:0.15em;
+    color:rgba(245,241,232,0.4);text-transform:uppercase;
+    padding:0 8px;margin-bottom:8px;
+  }
+  .sidebar-nav{display:flex;flex-direction:column;gap:2px}
+  .sidebar-link{
+    display:flex;align-items:center;gap:12px;
+    padding:11px 12px;border-radius:8px;
+    color:rgba(245,241,232,0.7);text-decoration:none;
+    font-size:14px;font-weight:500;cursor:pointer;
+    transition:background .15s, color .15s;
+  }
+  .sidebar-link:hover{background:rgba(245,241,232,0.06);color:var(--cream)}
+  .sidebar-link.active{
+    background:var(--forest-dark);color:var(--cream);
+  }
+  .sidebar-link.active::before{
+    content:'';width:3px;height:18px;background:var(--leaf-green);
+    border-radius:2px;margin-left:-12px;margin-right:9px;
+  }
+  .sidebar-link .badge-count{
+    margin-left:auto;background:var(--leaf-green);color:var(--cream);
+    font-size:10px;font-weight:700;padding:2px 7px;border-radius:999px;
+  }
+  .sidebar-link .badge-count.alert{background:var(--terracotta)}
+
+  .sidebar-foot{
+    margin-top:auto;padding:20px 16px;
+    border-top:1px solid rgba(245,241,232,0.1);
+  }
+  .user-card{
+    display:flex;align-items:center;gap:10px;
+    padding:10px;border-radius:10px;background:rgba(245,241,232,0.05);
+  }
+  .user-avatar{
+    width:36px;height:36px;border-radius:50%;
+    background:linear-gradient(135deg,var(--leaf-green),var(--river-blue));
+    display:flex;align-items:center;justify-content:center;
+    color:var(--cream);font-weight:700;font-size:14px;
+  }
+  .user-info .user-name{font-size:13px;font-weight:600;color:var(--cream)}
+  .user-info .user-email{font-size:11px;color:rgba(245,241,232,0.55);margin-top:1px}
+
+  /* ===================== MAIN ===================== */
+  .main{
+    display:flex;flex-direction:column;
+    background:#F3EFE5;
+    min-width:0;
+  }
+  .topbar{
+    background:var(--bone);
+    border-bottom:1px solid var(--border);
+    padding:14px 32px;
+    display:flex;align-items:center;justify-content:space-between;gap:24px;
+  }
+  .breadcrumb{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px}
+  .breadcrumb .current{color:var(--ink);font-weight:600}
+  .topbar-actions{display:flex;gap:10px;align-items:center}
+  .search-input{
+    background:#F3EFE5;border:1px solid var(--border);border-radius:8px;
+    padding:8px 14px 8px 36px;font-size:13px;width:280px;font-family:inherit;
+    background-image:url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236B6859' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3ccircle cx='11' cy='11' r='8'/%3e%3cpath d='m21 21-4.35-4.35'/%3e%3c/svg%3e");
+    background-repeat:no-repeat;background-position:12px center;
+  }
+  .icon-btn{
+    width:36px;height:36px;border-radius:8px;background:#F3EFE5;border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);
+    transition:all .15s;position:relative;
+  }
+  .icon-btn:hover{background:var(--forest-dark);color:var(--cream);border-color:var(--forest-dark)}
+  .icon-btn .notif-dot{
+    position:absolute;top:7px;right:7px;width:7px;height:7px;
+    background:var(--terracotta);border-radius:50%;
+    border:1.5px solid var(--bone);
+  }
+
+  /* ===================== PAGE HEADER ===================== */
+  .page-content{padding:32px}
+  .page-head{
+    display:flex;justify-content:space-between;align-items:flex-end;gap:24px;
+    margin-bottom:24px;flex-wrap:wrap;
+  }
+  .page-title{
+    font-family:'Anton',sans-serif;font-size:38px;letter-spacing:0.02em;
+    color:var(--forest-dark);text-transform:uppercase;line-height:1;
+  }
+  .page-sub{font-size:14px;color:var(--muted);margin-top:8px}
+  .btn-add{
+    background:var(--forest-dark);color:var(--cream);
+    padding:12px 22px;border-radius:10px;font-weight:600;font-size:14px;
+    border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;
+    transition:background .15s;text-decoration:none;
+  }
+  .btn-add:hover{background:var(--leaf-green)}
+
+  /* ===================== STAT CARDS ===================== */
+  .stat-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;
+  }
+  .stat-card{
+    background:var(--bone);border:1px solid var(--border);border-radius:14px;
+    padding:20px;display:flex;justify-content:space-between;align-items:flex-start;
+  }
+  .stat-card .label{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:0.05em;text-transform:uppercase}
+  .stat-card .value{font-family:'Anton',sans-serif;font-size:36px;color:var(--forest-dark);margin-top:6px;line-height:1}
+  .stat-card .trend{font-size:11px;color:var(--leaf-green);margin-top:6px;font-weight:600}
+  .stat-card .trend.down{color:var(--terracotta)}
+  .stat-icon{
+    width:42px;height:42px;border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .stat-icon.green{background:rgba(45,139,95,0.12);color:var(--leaf-green)}
+  .stat-icon.blue{background:rgba(42,107,173,0.12);color:var(--river-blue)}
+  .stat-icon.dark{background:rgba(61,74,45,0.12);color:var(--forest-dark)}
+  .stat-icon.terra{background:rgba(196,106,78,0.12);color:var(--terracotta)}
+
+  /* ===================== TABS ===================== */
+  .tabs-row{
+    display:flex;gap:4px;background:var(--bone);
+    padding:4px;border-radius:10px;border:1px solid var(--border);
+    margin-bottom:20px;width:fit-content;
+  }
+  .tab{
+    padding:8px 16px;border-radius:7px;font-size:13px;font-weight:600;
+    color:var(--muted);cursor:pointer;border:none;background:transparent;
+    transition:all .15s;
+  }
+  .tab.active{background:var(--forest-dark);color:var(--cream)}
+  .tab:not(.active):hover{color:var(--forest-dark)}
+
+  /* ===================== CONTENT GRID ===================== */
+  .work-grid{
+    display:grid;grid-template-columns:1fr 1.3fr;gap:20px;align-items:start;
+  }
+
+  /* Form card */
+  .form-card{
+    background:var(--bone);border:1px solid var(--border);border-radius:14px;
+    padding:24px;
+  }
+  .form-card h3{
+    font-family:'Anton',sans-serif;font-size:18px;letter-spacing:0.04em;
+    color:var(--forest-dark);margin-bottom:4px;text-transform:uppercase;
+  }
+  .form-card .form-sub{font-size:13px;color:var(--muted);margin-bottom:20px}
+  .form-field{margin-bottom:14px}
+  .form-field label{
+    display:block;font-size:12px;font-weight:700;color:var(--ink);
+    margin-bottom:6px;letter-spacing:0.04em;text-transform:uppercase;
+  }
+  .form-field input, .form-field textarea, .form-field select{
+    width:100%;background:#F3EFE5;border:1px solid var(--border);
+    color:var(--ink);padding:10px 12px;border-radius:8px;font-size:14px;
+    font-family:inherit;transition:border-color .15s;
+  }
+  .form-field input:focus, .form-field textarea:focus, .form-field select:focus{
+    outline:none;border-color:var(--leaf-green);
+    box-shadow:0 0 0 3px rgba(45,139,95,0.1);
+  }
+  .form-field textarea{resize:vertical;min-height:90px}
+  .form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .upload-zone{
+    border:2px dashed var(--border);border-radius:10px;padding:24px;
+    text-align:center;cursor:pointer;transition:border-color .15s, background .15s;
+    background:#F8F4EA;
+  }
+  .upload-zone:hover{border-color:var(--leaf-green);background:rgba(45,139,95,0.04)}
+  .upload-zone .icon{font-size:24px;margin-bottom:8px}
+  .upload-zone .text{font-size:13px;color:var(--ink);font-weight:600}
+  .upload-zone .hint{font-size:11px;color:var(--muted);margin-top:4px}
+
+  .checkbox-row{
+    display:flex;align-items:flex-start;gap:10px;
+    padding:12px;background:rgba(45,139,95,0.06);border-radius:8px;
+    border:1px solid rgba(45,139,95,0.15);margin-bottom:16px;
+  }
+  .checkbox-row input{margin-top:3px;accent-color:var(--leaf-green);width:16px;height:16px;cursor:pointer}
+  .checkbox-row label{cursor:pointer;flex:1}
+  .checkbox-row .cb-title{font-size:13px;font-weight:600;color:var(--ink)}
+  .checkbox-row .cb-desc{font-size:11px;color:var(--muted);margin-top:2px}
+
+  .form-footer{
+    display:flex;gap:10px;justify-content:flex-end;
+    padding-top:16px;border-top:1px solid var(--border);margin-top:8px;
+  }
+  .btn-primary{
+    background:var(--forest-dark);color:var(--cream);
+    padding:10px 20px;border-radius:8px;font-weight:600;font-size:13px;
+    border:none;cursor:pointer;display:inline-flex;align-items:center;gap:6px;
+  }
+  .btn-primary:hover{background:var(--leaf-green)}
+  .btn-secondary{
+    background:transparent;color:var(--muted);
+    padding:10px 18px;border-radius:8px;font-weight:600;font-size:13px;
+    border:1px solid var(--border);cursor:pointer;
+  }
+  .btn-secondary:hover{background:#F3EFE5;color:var(--ink)}
+
+  /* List card */
+  .list-card{
+    background:var(--bone);border:1px solid var(--border);border-radius:14px;
+    overflow:hidden;
+  }
+  .list-head{
+    padding:18px 20px;border-bottom:1px solid var(--border);
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .list-title{
+    font-family:'Anton',sans-serif;font-size:16px;letter-spacing:0.05em;
+    color:var(--forest-dark);text-transform:uppercase;
+  }
+  .list-filter{
+    background:#F3EFE5;border:1px solid var(--border);border-radius:7px;
+    padding:6px 10px;font-size:12px;color:var(--ink);font-family:inherit;
+  }
+  .list-item{
+    padding:16px 20px;border-bottom:1px solid var(--border);
+    display:grid;grid-template-columns:54px 1fr auto auto;gap:16px;align-items:center;
+    transition:background .15s;
+  }
+  .list-item:last-child{border-bottom:none}
+  .list-item:hover{background:#F8F4EA}
+  .item-thumb{
+    width:54px;height:54px;border-radius:8px;
+    background:linear-gradient(135deg,var(--leaf-green),var(--river-blue));
+    display:flex;align-items:center;justify-content:center;
+    color:var(--cream);font-family:'Anton',sans-serif;font-size:11px;letter-spacing:0.1em;
+    text-align:center;line-height:1;
+  }
+  .item-thumb.terra{background:linear-gradient(135deg,var(--terracotta),var(--forest-dark))}
+  .item-thumb.blue{background:linear-gradient(135deg,var(--river-blue),var(--forest-mid, #5C6E3F))}
+  .item-thumb.dark{background:linear-gradient(135deg,var(--forest-dark),var(--ink))}
+  .item-info .name{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:3px}
+  .item-info .meta{font-size:12px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap}
+  .item-info .meta .sep{color:rgba(0,0,0,0.2)}
+
+  .status-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+  .status{
+    font-size:10px;padding:3px 9px;border-radius:999px;font-weight:700;
+    letter-spacing:0.08em;text-transform:uppercase;
+  }
+  .status.published{background:rgba(45,139,95,0.15);color:var(--leaf-green)}
+  .status.draft{background:rgba(107,104,89,0.15);color:var(--muted)}
+  .status.featured{background:rgba(196,106,78,0.15);color:var(--terracotta)}
+  .status.archived{background:rgba(0,0,0,0.08);color:var(--muted)}
+
+  .row-actions{display:flex;gap:6px}
+  .action-btn{
+    width:30px;height:30px;border-radius:7px;border:1px solid var(--border);
+    background:transparent;cursor:pointer;color:var(--muted);
+    display:flex;align-items:center;justify-content:center;transition:all .15s;
+  }
+  .action-btn:hover{background:var(--forest-dark);color:var(--cream);border-color:var(--forest-dark)}
+  .action-btn.danger:hover{background:var(--terracotta);border-color:var(--terracotta)}
+
+  /* ===================== RESPONSIVE ===================== */
+  @media (max-width: 1100px){
+    .work-grid{grid-template-columns:1fr}
+    .stat-grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (max-width: 768px){
+    .admin-layout{grid-template-columns:1fr}
+    .sidebar{display:none}
+    .search-input{width:160px}
+  }
+</style>
+</head>
+<body>
+
+<div class="mockup-banner">
+  ADMIN MOCKUP · /admin route'u — LOGIN ARKASINDA, PUBLIC SİTEDE GÖRÜNMEZ
+</div>
+
+<div class="admin-layout">
+
+  <!-- ============= SIDEBAR ============= -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <img src="logo.jpg" alt="MCD">
+      <div class="text">
+        MCD ADMIN
+        <span>İÇERİK YÖNETİMİ</span>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">GENEL</div>
+      <nav class="sidebar-nav">
+        <a class="sidebar-link">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Gösterge Paneli
+        </a>
+      </nav>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">İÇERİK</div>
+      <nav class="sidebar-nav">
+        <a class="sidebar-link active">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Etkinlikler
+          <span class="badge-count">12</span>
+        </a>
+        <a class="sidebar-link">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+          Haberler
+          <span class="badge-count">28</span>
+        </a>
+        <a class="sidebar-link">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>
+          Slider Afişleri
+          <span class="badge-count">3</span>
+        </a>
+        <a class="sidebar-link">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          İletişim Mesajları
+          <span class="badge-count alert">5</span>
+        </a>
+        <a class="sidebar-link">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+          Sayfa İçerikleri
+        </a>
+      </nav>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">YÖNETİM</div>
+      <nav class="sidebar-nav">
+        <a class="sidebar-link">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/></svg>
+          Kullanıcılar
+        </a>
+        <a class="sidebar-link">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+          Ayarlar
+        </a>
+      </nav>
+    </div>
+
+    <div class="sidebar-foot">
+      <div class="user-card">
+        <div class="user-avatar">İG</div>
+        <div class="user-info">
+          <div class="user-name">İgeb</div>
+          <div class="user-email">admin@munzurcd.org</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============= MAIN ============= -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="breadcrumb">
+        <span>Admin</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+        <span class="current">Etkinlikler</span>
+      </div>
+      <div class="topbar-actions">
+        <input type="text" class="search-input" placeholder="Ara...">
+        <button class="icon-btn" title="Bildirimler">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+          <span class="notif-dot"></span>
+        </button>
+        <button class="icon-btn" title="Siteyi görüntüle">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- PAGE CONTENT -->
+    <div class="page-content">
+
+      <!-- HEADER -->
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">ETKİNLİKLER</h1>
+          <div class="page-sub">Etkinlik takvimi ve anasayfa slider'ını buradan yönet.</div>
+        </div>
+        <button class="btn-add">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          YENİ ETKİNLİK
+        </button>
+      </div>
+
+      <!-- STATS -->
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div>
+            <div class="label">Toplam</div>
+            <div class="value">12</div>
+            <div class="trend">+3 bu ay</div>
+          </div>
+          <div class="stat-icon green">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div>
+            <div class="label">Yayında</div>
+            <div class="value">9</div>
+            <div class="trend">Tüm aktif</div>
+          </div>
+          <div class="stat-icon blue">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9,12 11,14 15,10"/></svg>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div>
+            <div class="label">Slider'da</div>
+            <div class="value">3</div>
+            <div class="trend">Öne çıkarılan</div>
+          </div>
+          <div class="stat-icon terra">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div>
+            <div class="label">Taslak</div>
+            <div class="value">3</div>
+            <div class="trend down">Yayınlanmadı</div>
+          </div>
+          <div class="stat-icon dark">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- FILTER TABS -->
+      <div class="tabs-row">
+        <button class="tab active">TÜMÜ (12)</button>
+        <button class="tab">YAYINDA (9)</button>
+        <button class="tab">SLIDER (3)</button>
+        <button class="tab">TASLAK (3)</button>
+        <button class="tab">GEÇMİŞ (24)</button>
+      </div>
+
+      <!-- WORK GRID -->
+      <div class="work-grid">
+
+        <!-- LEFT: ADD FORM -->
+        <div class="form-card">
+          <h3>+ YENİ ETKİNLİK</h3>
+          <div class="form-sub">Etkinlik bilgilerini doldurup yayınla veya taslak olarak sakla.</div>
+
+          <div class="form-field">
+            <label>Etkinlik Adı</label>
+            <input type="text" placeholder="örn. 23. Munzur Festivali">
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-field">
+              <label>Tarih</label>
+              <input type="date">
+            </div>
+            <div class="form-field">
+              <label>Saat</label>
+              <input type="time">
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label>Konum</label>
+            <input type="text" placeholder="örn. Tunceli — Munzur Vadisi">
+          </div>
+
+          <div class="form-field">
+            <label>Kategori</label>
+            <select>
+              <option>Kültür-Sanat</option>
+              <option>Çevre Eylemi</option>
+              <option>Atölye</option>
+              <option>Panel / Söyleşi</option>
+              <option>Doğa Yürüyüşü</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label>Açıklama</label>
+            <textarea placeholder="Etkinlik detayları, program, katılım koşulları..."></textarea>
+          </div>
+
+          <div class="form-field">
+            <label>Afiş (Slider'da gösterilecek)</label>
+            <div class="upload-zone">
+              <div class="icon">📎</div>
+              <div class="text">Dosya seç veya sürükle bırak</div>
+              <div class="hint">JPG, PNG · max 2MB · önerilen 1200x900px</div>
+            </div>
+          </div>
+
+          <div class="checkbox-row">
+            <input type="checkbox" id="featured" checked>
+            <label for="featured">
+              <div class="cb-title">Anasayfa slider'ında öne çıkar</div>
+              <div class="cb-desc">İşaretlerseniz bu etkinlik anasayfanın slider widget'ında görünür</div>
+            </label>
+          </div>
+
+          <div class="form-footer">
+            <button class="btn-secondary">TASLAK</button>
+            <button class="btn-primary">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>
+              YAYINLA
+            </button>
+          </div>
+        </div>
+
+        <!-- RIGHT: EXISTING LIST -->
+        <div class="list-card">
+          <div class="list-head">
+            <div class="list-title">MEVCUT ETKİNLİKLER</div>
+            <select class="list-filter">
+              <option>En yeni</option>
+              <option>En eski</option>
+              <option>A–Z</option>
+            </select>
+          </div>
+
+          <div class="list-item">
+            <div class="item-thumb">FEST 26</div>
+            <div class="item-info">
+              <div class="name">23. Munzur Doğa & Kültür Festivali</div>
+              <div class="meta">
+                <span>15 Tem 2026</span>
+                <span class="sep">·</span>
+                <span>Tunceli</span>
+                <span class="sep">·</span>
+                <span>Kültür-Sanat</span>
+              </div>
+            </div>
+            <div class="status-row">
+              <span class="status featured">SLIDER</span>
+              <span class="status published">YAYINDA</span>
+            </div>
+            <div class="row-actions">
+              <button class="action-btn" title="Düzenle">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 113 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              </button>
+              <button class="action-btn danger" title="Sil">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3,6 5,6 21,6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="list-item">
+            <div class="item-thumb terra">ÇEVRE</div>
+            <div class="item-info">
+              <div class="name">Dünya Çevre Günü Etkinliği</div>
+              <div class="meta">
+                <span>5 Haz 2026</span>
+                <span class="sep">·</span>
+                <span>Tunceli Merkez</span>
+                <span class="sep">·</span>
+                <span>Çevre Eylemi</span>
+              </div>
+            </div>
+            <div class="status-row">
+              <span class="status featured">SLIDER</span>
+              <span class="status published">YAYINDA</span>
+            </div>
+            <div class="row-actions">
+              <button class="action-btn">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 113 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              </button>
+              <button class="action-btn danger">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3,6 5,6 21,6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="list-item">
+            <div class="item-thumb blue">BLG SL</div>
+            <div class="item-info">
+              <div class="name">Munzur Suyu Belgesel Gösterimi</div>
+              <div class="meta">
+                <span>17 Haz 2026</span>
+                <span class="sep">·</span>
+                <span>Dernek Lokali</span>
+                <span class="sep">·</span>
+                <span>Panel / Söyleşi</span>
+              </div>
+            </div>
+            <div class="status-row">
+              <span class="status published">YAYINDA</span>
+            </div>
+            <div class="row-actions">
+              <button class="action-btn">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 113 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              </button>
+              <button class="action-btn danger">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3,6 5,6 21,6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="list-item">
+            <div class="item-thumb dark">YRY 26</div>
+            <div class="item-info">
+              <div class="name">Çocuklarla Doğa Yürüyüşü</div>
+              <div class="meta">
+                <span>27 Haz 2026</span>
+                <span class="sep">·</span>
+                <span>Halbori Gözeleri</span>
+                <span class="sep">·</span>
+                <span>Doğa Yürüyüşü</span>
+              </div>
+            </div>
+            <div class="status-row">
+              <span class="status published">YAYINDA</span>
+            </div>
+            <div class="row-actions">
+              <button class="action-btn">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 113 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              </button>
+              <button class="action-btn danger">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3,6 5,6 21,6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="list-item">
+            <div class="item-thumb" style="background:linear-gradient(135deg,#5C6E3F,#2A3520)">ATÖL</div>
+            <div class="item-info">
+              <div class="name">Kompost Atölyesi</div>
+              <div class="meta">
+                <span>10 Tem 2026</span>
+                <span class="sep">·</span>
+                <span>Dernek Bahçesi</span>
+                <span class="sep">·</span>
+                <span>Atölye</span>
+              </div>
+            </div>
+            <div class="status-row">
+              <span class="status draft">TASLAK</span>
+            </div>
+            <div class="row-actions">
+              <button class="action-btn">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 113 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              </button>
+              <button class="action-btn danger">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3,6 5,6 21,6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

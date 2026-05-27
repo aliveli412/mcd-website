@@ -1,0 +1,24 @@
+# Munzur Çevre Derneği — Brand Tokens
+
+## Colors
+--forest-dark: #3D4A2D  (banner background, dominant)
+--forest-deep: #2A3520  (footer, dark accents)
+--leaf-green: #2D8B5F   (logo green, primary accent)
+--river-blue: #2A6BAD   (logo blue, secondary accent)
+--cream: #F5F1E8        (warm cream background)
+--cream-deep: #EAE3D2   (alternative section bg)
+--bone: #FAF6ED         (card background)
+--terracotta: #C46A4E   (warm accent)
+--ink: #1A1F12          (near-black text)
+--muted: #6B6859        (muted text)
+
+## Fonts
+Display: Anton (Google Fonts) — titles, hero, eyebrows
+Body: DM Sans (Google Fonts) — all body text
+Script: Caveat (Google Fonts) — hero tagline, decorative
+Serif: Fraunces (Google Fonts) — italic em emphasis in titles
+
+## Tone
+- Aktivist çevre derneği, 2003'ten beri Munzur Vadisi için mücadele
+- Dil: Türkçe (öncelikli), Kürtçe gelecekte eklenebilir
+- Yazım: Doğrudan, samimi, eyleme çağıran. Reklam dili YOK.

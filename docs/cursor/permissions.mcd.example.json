@@ -1,0 +1,32 @@
+{
+  // Munzur sitesi geliştirme — terminal ve MCP onaylarını azaltır.
+  // Kurulum: scripts/install-cursor-auto-run.ps1
+  // veya bu dosyayı kopyalayın: %USERPROFILE%\.cursor\permissions.json
+  //
+  // Cursor Settings > Agent > Auto-run: "Allowlist" veya "Run Everything" açık olmalı.
+
+  "mcpAllowlist": ["*:*"],
+
+  "terminalAllowlist": [
+    "npm",
+    "npx",
+    "node",
+    "next",
+    "git",
+    "cd ",
+    "powershell",
+    "pwsh",
+    "curl",
+    "Invoke-WebRequest",
+    "Copy-Item",
+    "Move-Item",
+    "New-Item",
+    "Test-Path",
+    "Get-ChildItem",
+    "Select-Object",
+    "Format-Table",
+    "gh ",
+    "eslint",
+    "tsc"
+  ]
+}
