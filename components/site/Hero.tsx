@@ -31,7 +31,7 @@ export async function Hero() {
           {hero.tag}
         </p>
 
-        <h1 className="order-1 mb-0 flex flex-col gap-2 font-display text-[clamp(2.85rem,11vw,10.5rem)] leading-[1.05] tracking-wide uppercase sm:gap-1 sm:leading-[0.95] md:order-2 md:mb-9 lg:gap-0 lg:leading-[0.88]">
+        <h1 className="order-1 mb-0 flex flex-col gap-2 font-display text-[clamp(2.85rem,11vw,10.5rem)] leading-[0.95] tracking-wide uppercase sm:gap-1 md:order-2 md:mb-9 lg:gap-0">
           <span className="block">{hero.title[0]}</span>
           <span className="block text-transparent [-webkit-text-stroke:1.5px_#F5F1E8] sm:[-webkit-text-stroke:2px_#F5F1E8]">
             {hero.title[1]}
