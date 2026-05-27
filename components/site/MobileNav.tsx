@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { LocalizedLink } from "@/components/site/LocalizedLink";
 import { usePathname } from "next/navigation";
 import { Suspense, useEffect } from "react";
 import { ArrowRight } from "@/components/icons/ArrowRight";
@@ -85,14 +86,14 @@ export function MobileNav({
         </ul>
 
         <div className="space-y-3 border-t border-black/6 p-5">
-          <Link
+          <LocalizedLink
             href="/iletisim"
             onClick={onClose}
             className="flex w-full items-center justify-center gap-2 rounded-full bg-forest-dark px-5 py-3.5 text-sm font-semibold text-cream no-underline hover:bg-leaf-green"
           >
             {t.supportCta}
             <ArrowRight />
-          </Link>
+          </LocalizedLink>
           <Suspense fallback={null}>
             <LocaleSwitcher variant="mobile" className="mx-auto w-full justify-center" />
           </Suspense>

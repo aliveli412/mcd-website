@@ -3,11 +3,13 @@ import { ArrowRight } from "@/components/icons/ArrowRight";
 import { SiteContainer } from "@/components/layout/SiteContainer";
 import { SectionTitle } from "@/components/site/SectionTitle";
 import { getLocale } from "@/lib/i18n/locale";
+import { localizedPath } from "@/lib/i18n/locale-url";
 import { getSiteContent } from "@/lib/i18n/site-content";
 import { organization } from "@/lib/organization";
 
 export async function JoinCtaBand() {
-  const join = getSiteContent(await getLocale()).joinCta;
+  const locale = await getLocale();
+  const join = getSiteContent(locale).joinCta;
 
   return (
     <section className="border-t border-cream/10 bg-forest-dark py-14 text-cream md:py-16">
@@ -26,7 +28,7 @@ export async function JoinCtaBand() {
         </div>
         <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
           <Link
-            href="/iletisim"
+            href={localizedPath("/iletisim", locale)}
             className="inline-flex items-center justify-center gap-2 rounded-full bg-cream px-7 py-3.5 text-sm font-semibold text-forest-dark transition-colors hover:bg-leaf-green hover:text-cream"
           >
             {join.contactPage}

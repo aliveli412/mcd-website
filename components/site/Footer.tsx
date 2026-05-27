@@ -3,7 +3,7 @@ import { SocialLinks } from "@/components/site/SocialLinks";
 import { LogoMark } from "@/components/layout/LogoMark";
 import { SiteContainer } from "@/components/layout/SiteContainer";
 import { organization } from "@/lib/organization";
-import { getFooterNav } from "@/lib/i18n/navigation";
+import { getFooterNav, localizeFooterLinks } from "@/lib/i18n/navigation";
 import { getLocale } from "@/lib/i18n/locale";
 import { getMessages } from "@/lib/i18n/messages";
 import { getSiteContent } from "@/lib/i18n/site-content";
@@ -62,6 +62,8 @@ export async function Footer() {
   const t = getMessages(locale);
   const site = getSiteContent(locale);
   const footerNav = getFooterNav(locale);
+  const footerActivities = localizeFooterLinks(site.footerActivities, locale);
+  const footerSupport = localizeFooterLinks(site.footerSupport, locale);
 
   return (
     <footer className="border-t-4 border-leaf-green bg-forest-deep text-cream">
@@ -93,8 +95,8 @@ export async function Footer() {
 
           <div className="grid gap-10 sm:grid-cols-3 lg:contents">
             <FooterColumn title={t.footer.links} links={footerNav} />
-            <FooterColumn title={t.footer.activities} links={site.footerActivities} />
-            <FooterColumn title={t.footer.support} links={site.footerSupport} />
+            <FooterColumn title={t.footer.activities} links={footerActivities} />
+            <FooterColumn title={t.footer.support} links={footerSupport} />
           </div>
         </div>
 

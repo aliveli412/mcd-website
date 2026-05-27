@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { LocalizedLink } from "@/components/site/LocalizedLink";
 import { Suspense, useState } from "react";
 import { ArrowRight } from "@/components/icons/ArrowRight";
 import { LogoMark } from "@/components/layout/LogoMark";
@@ -68,13 +68,13 @@ export function Header() {
               variant="header"
               className="[&_a]:text-forest-dark/70 [&_a]:hover:bg-forest-dark/5 [&_a]:hover:text-leaf-green sm:hidden"
             />
-            <Link
+            <LocalizedLink
               href="/iletisim"
               className="hidden items-center gap-2 rounded-full bg-forest-dark px-[22px] py-[11px] text-sm font-semibold text-cream transition-colors hover:bg-leaf-green sm:inline-flex"
             >
               {t.supportCta}
               <ArrowRight />
-            </Link>
+            </LocalizedLink>
 
             <button
               type="button"

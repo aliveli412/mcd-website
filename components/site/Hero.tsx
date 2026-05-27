@@ -3,11 +3,13 @@ import Link from "next/link";
 import { ArrowRight } from "@/components/icons/ArrowRight";
 import { SiteContainer } from "@/components/layout/SiteContainer";
 import { getLocale } from "@/lib/i18n/locale";
+import { localizedPath } from "@/lib/i18n/locale-url";
 import { getSiteContent } from "@/lib/i18n/site-content";
 import { sitePhotos } from "@/lib/site-photos";
 
 export async function Hero() {
-  const hero = getSiteContent(await getLocale()).hero;
+  const locale = await getLocale();
+  const hero = getSiteContent(locale).hero;
   const heroImage = sitePhotos.heroBelowTitle;
 
   return (
@@ -43,14 +45,14 @@ export async function Hero() {
           </p>
           <div className="flex flex-wrap gap-3.5">
             <Link
-              href="/etkinlikler"
+              href={localizedPath("/etkinlikler", locale)}
               className="inline-flex items-center gap-2.5 rounded-full bg-cream px-7 py-3.5 text-[15px] font-semibold text-forest-dark transition-all hover:bg-leaf-green hover:text-cream"
             >
               {hero.ctaEvents}
               <ArrowRight />
             </Link>
             <Link
-              href="/hakkimizda"
+              href={localizedPath("/hakkimizda", locale)}
               className="inline-flex items-center gap-2.5 rounded-full border-[1.5px] border-cream/40 px-[26px] py-[13px] text-[15px] font-semibold text-cream transition-all hover:border-cream hover:bg-cream/8"
             >
               {hero.ctaAbout}

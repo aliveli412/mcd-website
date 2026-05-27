@@ -5,6 +5,7 @@ import { useLocale } from "@/components/site/LocaleProvider";
 import { ArrowRight } from "@/components/icons/ArrowRight";
 import { NewsCoverImage } from "@/components/site/NewsCoverImage";
 import type { PublicNews } from "@/lib/data/types";
+import { localizedPath } from "@/lib/i18n/locale-url";
 
 function CalendarIcon() {
   return (
@@ -34,11 +35,11 @@ export function NewsCard({
   className?: string;
   draggable?: boolean;
 }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
 
   return (
     <Link
-      href={`/haberler/${item.slug}`}
+      href={localizedPath(`/haberler/${item.slug}`, locale)}
       draggable={draggable}
       onDragStart={draggable ? undefined : (e) => e.preventDefault()}
       className={`group flex h-full flex-col overflow-hidden rounded-2xl border border-black/4 bg-bone text-ink no-underline transition-all hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(61,74,45,0.12)] ${draggable ? "" : "select-none"} ${className}`.trim()}

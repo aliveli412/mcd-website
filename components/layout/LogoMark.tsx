@@ -1,5 +1,7 @@
+"use client";
+
 import Image from "next/image";
-import Link from "next/link";
+import { LocalizedLink } from "@/components/site/LocalizedLink";
 
 export const MCD_LOGO_PATH = "/logo/mcd-logo-transparent.png";
 
@@ -23,7 +25,7 @@ export function LogoMark({ variant = "nav" }: LogoMarkProps) {
       : "h-[3.25rem] w-auto max-w-[260px] sm:h-[3.75rem] sm:max-w-[300px]";
 
   return (
-    <Link
+    <LocalizedLink
       href="/"
       className={`group inline-flex shrink-0 items-center no-underline focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-leaf-green ${
         isCentered ? "justify-center" : ""
@@ -38,6 +40,6 @@ export function LogoMark({ variant = "nav" }: LogoMarkProps) {
         priority={variant === "nav"}
         unoptimized
       />
-    </Link>
+    </LocalizedLink>
   );
 }

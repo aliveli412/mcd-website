@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Anton, DM_Sans, Caveat, Fraunces } from "next/font/google";
-import { cookies } from "next/headers";
-import { LOCALE_COOKIE, parseLocale } from "@/lib/i18n/locale";
+import { getLocale } from "@/lib/i18n/locale";
 import "./globals.css";
 
 const anton = Anton({
@@ -49,7 +48,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const locale = parseLocale((await cookies()).get(LOCALE_COOKIE)?.value);
+  const locale = await getLocale();
 
   return (
     <html

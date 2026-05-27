@@ -8,6 +8,7 @@ import { PageBanner } from "@/components/site/PageBanner";
 import { SectionEyebrow, SectionTitle } from "@/components/site/SectionParts";
 import { getPublishedEvents } from "@/lib/data/queries";
 import { getLocale } from "@/lib/i18n/locale";
+import { localizedPath } from "@/lib/i18n/locale-url";
 import { getSiteContent } from "@/lib/i18n/site-content";
 import { sitePhotos } from "@/lib/site-photos";
 
@@ -22,9 +23,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function EtkinliklerPage() {
+  const locale = await getLocale();
   const [events, ev] = await Promise.all([
     getPublishedEvents(),
-    getLocale().then((locale) => getSiteContent(locale).events),
+    Promise.resolve(getSiteContent(locale).events),
   ]);
 
   return (
@@ -43,7 +45,7 @@ export default async function EtkinliklerPage() {
             {events.map((event) => (
               <li key={event.id}>
                 <Link
-                  href={`/etkinlikler/${event.slug}`}
+                  href={localizedPath(`/etkinlikler/${event.slug}`, locale)}
                   className="group flex h-full flex-col overflow-hidden rounded-2xl border border-black/4 bg-bone no-underline transition-all hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(61,74,45,0.12)]"
                 >
                   <div className="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-leaf-green to-river-blue">

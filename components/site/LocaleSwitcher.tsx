@@ -5,7 +5,7 @@ import { useTransition } from "react";
 import { setLocale } from "@/app/actions/set-locale";
 import { useLocale } from "@/components/site/LocaleProvider";
 import type { Locale } from "@/lib/i18n/locale";
-import { pathWithLocale } from "@/lib/i18n/locale-url";
+import { localizedPath } from "@/lib/i18n/locale-url";
 
 const styles = {
   header: {
@@ -42,7 +42,7 @@ export function LocaleSwitcher({
   function switchTo(next: Locale) {
     if (next === locale || pending) return;
 
-    const href = pathWithLocale(pathname, next, searchParams);
+    const href = localizedPath(pathname, next, searchParams);
 
     startTransition(async () => {
       await setLocale(next);

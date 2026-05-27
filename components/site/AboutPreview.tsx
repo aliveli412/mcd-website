@@ -2,6 +2,7 @@ import { ArrowRight } from "@/components/icons/ArrowRight";
 import { BtnPrimary, SectionEyebrow, SectionTitle, SiteSection } from "@/components/site/SectionParts";
 import { SitePhoto } from "@/components/site/SitePhoto";
 import { getLocale } from "@/lib/i18n/locale";
+import { localizedPath } from "@/lib/i18n/locale-url";
 import { getSiteContent } from "@/lib/i18n/site-content";
 import { sitePhotos } from "@/lib/site-photos";
 
@@ -48,7 +49,8 @@ function PillarIcon({ type }: { type: string }) {
 }
 
 export async function AboutPreview() {
-  const { aboutPreview: about, aboutPage } = getSiteContent(await getLocale());
+  const locale = await getLocale();
+  const { aboutPreview: about, aboutPage } = getSiteContent(locale);
 
   return (
     <SiteSection
@@ -100,7 +102,7 @@ export async function AboutPreview() {
             ))}
           </div>
 
-          <BtnPrimary href="/hakkimizda" className="mt-6">
+          <BtnPrimary href={localizedPath("/hakkimizda", locale)} className="mt-6">
             {about.cta}
             <ArrowRight />
           </BtnPrimary>

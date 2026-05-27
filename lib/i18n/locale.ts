@@ -1,3 +1,4 @@
+import { unstable_noStore as noStore } from "next/cache";
 import { cookies, headers } from "next/headers";
 import {
   LOCALE_COOKIE,
@@ -16,6 +17,7 @@ export {
 } from "@/lib/i18n/locale-constants";
 
 export async function getLocale(): Promise<Locale> {
+  noStore();
   const fromHeader = (await headers()).get(LOCALE_HEADER);
   if (fromHeader) return parseLocale(fromHeader);
 

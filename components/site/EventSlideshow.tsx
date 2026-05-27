@@ -8,6 +8,7 @@ import { useLocale } from "@/components/site/LocaleProvider";
 import { BtnGhost, BtnPrimary, SectionHeader, SiteSection } from "@/components/site/SectionParts";
 import { useSwipeCarousel } from "@/components/site/useSwipeCarousel";
 import type { PublicEvent } from "@/lib/data/types";
+import { localizedPath } from "@/lib/i18n/locale-url";
 
 function LocationIcon() {
   return (
@@ -93,8 +94,9 @@ export function EventSlideshow({
   events: PublicEvent[];
   showRecent?: boolean;
 }) {
-  const { site } = useLocale();
+  const { site, locale } = useLocale();
   const ev = site.events;
+  const eventsListHref = localizedPath("/etkinlikler", locale);
   const total = events.length;
   const eyebrow = showRecent ? ev.recentEyebrow : ev.upcomingEyebrow;
   const { index, go, goBy, dragHandlers } = useSwipeCarousel(total);
@@ -106,7 +108,7 @@ export function EventSlideshow({
           eyebrow={eyebrow}
           title={ev.title}
           accent={ev.accent}
-          link={{ href: "/etkinlikler", label: ev.allLink }}
+          link={{ href: eventsListHref, label: ev.allLink }}
         />
         <p className="text-muted">{ev.empty}</p>
       </SiteSection>
@@ -119,7 +121,7 @@ export function EventSlideshow({
         eyebrow={eyebrow}
         title={ev.title}
         accent={ev.accent}
-        link={{ href: "/etkinlikler", label: ev.allLink }}
+        link={{ href: eventsListHref, label: ev.allLink }}
       />
       {showRecent ? (
         <p className="-mt-6 mb-8 text-sm text-muted">{ev.recentNote}</p>
@@ -144,7 +146,10 @@ export function EventSlideshow({
             style={{ transform: `translateX(-${index * 100}%)` }}
           >
             {events.map((slide) => {
-              const detailHref = `/etkinlikler/${slide.slug}`;
+              const detailHref = localizedPath(
+                `/etkinlikler/${slide.slug}`,
+                locale,
+              );
               return (
               <article
                 key={slide.id}

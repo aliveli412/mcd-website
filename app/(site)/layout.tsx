@@ -3,6 +3,8 @@ import { Header } from "@/components/site/Header";
 import { LocaleProvider } from "@/components/site/LocaleProvider";
 import { getLocale } from "@/lib/i18n/locale";
 
+export const dynamic = "force-dynamic";
+
 export default async function SiteLayout({
   children,
 }: Readonly<{

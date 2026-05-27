@@ -12,6 +12,7 @@ import {
   getPublishedEvents,
 } from "@/lib/data/queries";
 import { getLocale } from "@/lib/i18n/locale";
+import { localizedPath } from "@/lib/i18n/locale-url";
 import { getSiteContent } from "@/lib/i18n/site-content";
 
 type EtkinlikDetailPageProps = {
@@ -61,7 +62,8 @@ export default async function EtkinlikDetailPage({
   params,
 }: EtkinlikDetailPageProps) {
   const { slug } = await params;
-  const ev = getSiteContent(await getLocale()).events;
+  const locale = await getLocale();
+  const ev = getSiteContent(locale).events;
   const event = await getEventBySlug(slug);
   if (!event) notFound();
 
@@ -77,7 +79,7 @@ export default async function EtkinlikDetailPage({
         />
         <SiteContainer className="relative">
           <Link
-            href="/etkinlikler"
+            href={localizedPath("/etkinlikler", locale)}
             className="mb-8 inline-flex items-center gap-2 text-sm font-medium text-cream/70 transition-colors hover:text-leaf-green"
           >
             {ev.backToEvents}
@@ -139,11 +141,13 @@ export default async function EtkinlikDetailPage({
                 </span>
               </div>
               <div className="mt-8 flex flex-wrap gap-3">
-                <BtnPrimary href="/iletisim" className="mt-0">
+                <BtnPrimary href={localizedPath("/iletisim", locale)} className="mt-0">
                   {ev.joinRegister}
                   <ArrowRight />
                 </BtnPrimary>
-                <BtnGhost href="/iletisim">{ev.askQuestion}</BtnGhost>
+                <BtnGhost href={localizedPath("/iletisim", locale)}>
+                  {ev.askQuestion}
+                </BtnGhost>
               </div>
             </div>
           </div>
@@ -204,7 +208,7 @@ export default async function EtkinlikDetailPage({
               {otherEvents.map((other) => (
                 <Link
                   key={other.slug}
-                  href={`/etkinlikler/${other.slug}`}
+                  href={localizedPath(`/etkinlikler/${other.slug}`, locale)}
                   className="group rounded-2xl border border-black/6 bg-bone p-6 no-underline transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(61,74,45,0.1)]"
                 >
                   <span className="text-xs font-semibold tracking-widest text-leaf-green uppercase">
